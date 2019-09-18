@@ -3,39 +3,23 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-import {createStore} from 'redux';
+import {combineReducers, createStore} from 'redux';
 
-function reducer(state, action) {
-    if(action.type === 'ChangeState'){
-        return action.payload.newState
-    }
-    else{
-        return 'State';
-    }
+function userReducer(state = '', action) {
+    return state;
 }
-const Store = createStore(reducer);
-console.log(Store.getState());
 
-const action ={
-    type:'ChangeState',
-    payload:{
-        newState:'yeni state'
-    }
-};
+function postsReducer(state = [], action) {
+    return state;
+}
 
-const action2 ={
-    type:'ChangeState',
-    payload:{
-        newState:'state 2'
-    }
-};
-
-Store.subscribe(()=>{
-    console.log('store updated:', Store.getState());
+const rootReducer= combineReducers({
+    user:userReducer,
+    posts:postsReducer
 });
 
-Store.dispatch(action);
-Store.dispatch(action2);
+const Store = createStore(rootReducer);
+console.log(Store.getState());
 
 
 ReactDOM.render(<App />, document.getElementById('root'));
